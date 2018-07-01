@@ -10,7 +10,7 @@ the working directory set to the one they were already working in.
 
 # Dependencies ?
 
-bash, coreutils, grep, procps-ng, xorg-xdpyinfo, xorg-xprop.
+bash, coreutils, grep, procps-ng, xorg-xprop.
 
 # How do I use it ?
 

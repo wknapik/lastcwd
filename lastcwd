@@ -34,7 +34,7 @@ foreground_pid() {
 pid_cwd() { pwdx "$1"|cut -d' ' -f2-; }
 
 # Establish active window and its pid.
-window_id="$(xdpyinfo|grep focus|cut -d' ' -f4|cut -d, -f1)"
+window_id="$(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW|cut -f2)"
 window_pid="$(xprop _NET_WM_PID -id "$window_id"|cut -d' ' -f3)"
 
 # Establish foreground pid. Don't bother if none of window_pid's children have a tty.
