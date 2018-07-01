@@ -30,6 +30,7 @@ foreground_pid() {
     fi
 }
 
+# Print cwd for pid.
 pid_cwd() { pwdx "$1"|cut -d' ' -f2-; }
 
 # Establish active window and its pid.
