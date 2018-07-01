@@ -41,7 +41,8 @@ fgpid="$(foreground_pid "$window_pid")"
 if [[ "$fgpid" -eq 0 ]]; then
     pid_cwd "$window_pid"
 elif ps -o comm:1= "$fgpid"|grep -q '^tmux'; then
-    fgpid2="$(foreground_pid "$(tmux display-message -p '#{pane_pid}')")"
+    client_name="$(tmux list-clients -F '#{client_name} #{client_pid}'|grep " $fgpid\$"|cut -d' ' -f1)"
+    fgpid2="$(foreground_pid "$(tmux display-message -t "$client_name" -p '#{pane_pid}')")"
     pid_cwd "$fgpid2"
 else
     pid_cwd "$fgpid"

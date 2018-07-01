@@ -12,10 +12,6 @@ the working directory set to the one they were already working in.
 
 bash, coreutils, grep, procps-ng, xorg-xdpyinfo, xorg-xprop.
 
-# Limitations ?
-
-Currently using multiple tmux sessions can confuse lastcwd. Looking into it.
-
 # How do I use it ?
 
 E.g.:
