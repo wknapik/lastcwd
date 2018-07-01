@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2009
+
+# Fail on errors.
+set -eEo pipefail
+shopt -s inherit_errexit >/dev/null 2>&1 || true
+
+# Print foreground descendant pid for given pid, or 0.
+foreground_pid() {
+    local -ra pids=("$@")
+    if [[ -n "${pids[*]}" ]]; then
+        local -a tmp=() cpids=()
+        local pid wid
+        for pid in "${pids[@]}"; do
+            if ps -o stat:1= "$pid"|grep -qFm1 +; then
+                wid="$(ps e -o args= "$pid"|grep -o "WINDOWID=[0-9][0-9]*"|cut -d= -f2 || true)"
+                if [[ -n "$wid" && "$wid" == "$((window_id))" || -z "$wid" ]]; then
+                    echo "$pid"
+                    return
+                fi
+            else
+                read -ra tmp <<<"$(ps -o pid:1= --ppid "$pid"|tr '\n' '\t')"
+                cpids+=("${tmp[@]}")
+            fi
+        done
+        foreground_pid "${cpids[@]}"
+    else
+        echo 0
+    fi
+}
+
+pid_cwd() { pwdx "$1"|cut -d' ' -f2-; }
+
+# Establish active window and its pid, calculate fgpid.
+window_id="$(xdpyinfo|grep focus|cut -d' ' -f4|cut -d, -f1)"
+window_pid="$(xprop _NET_WM_PID -id "$window_id"|cut -d' ' -f3)"
+fgpid="$(foreground_pid "$window_pid")"
+
+# Print cwd for foreground process with special handling for tmux.
+if [[ "$fgpid" -eq 0 ]]; then
+    pid_cwd "$window_pid"
+elif ps -o comm:1= "$fgpid"|grep -q '^tmux'; then
+    fgpid2="$(foreground_pid "$(tmux display-message -p '#{pane_pid}')")"
+    pid_cwd "$fgpid2"
+else
+    pid_cwd "$fgpid"
+fi
