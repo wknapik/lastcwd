@@ -32,10 +32,16 @@ foreground_pid() {
 
 pid_cwd() { pwdx "$1"|cut -d' ' -f2-; }
 
-# Establish active window and its pid, calculate fgpid.
+# Establish active window and its pid.
 window_id="$(xdpyinfo|grep focus|cut -d' ' -f4|cut -d, -f1)"
 window_pid="$(xprop _NET_WM_PID -id "$window_id"|cut -d' ' -f3)"
-fgpid="$(foreground_pid "$window_pid")"
+
+# Establish foreground pid. Don't bother if none of window_pid's children have a tty.
+if ps -o tty= --ppid "$window_pid"|grep -qv '^?$'; then
+    fgpid="$(foreground_pid "$window_pid")"
+else
+    fgpid=0
+fi
 
 # Print cwd for foreground process with special handling for tmux.
 if [[ "$fgpid" -eq 0 ]]; then
