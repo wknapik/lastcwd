@@ -6,7 +6,8 @@ process running in the currently focused X window.
 It works correctly with tmux, but not screen.
 
 The main purpose of this tool is to allow the user to open a new terminal with
-the working directory set to the one they were already working in.
+the working directory set to the one they were already working in, using a key
+binding, but it could also be used with file managers, media players, etc.
 
 # Dependencies ?
 
@@ -32,6 +33,10 @@ xfce4-terminal --working-directory "$(lastcwd)"
 ```
 ```
 lxterminal --working-directory="$(lastcwd)"
+```
+also
+```
+thunar "$(lastcwd)"
 ```
 etc.
 
