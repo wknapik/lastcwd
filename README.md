@@ -21,7 +21,7 @@ Aterm, konsole, sakura, urxvt, xfce4-terminal, xterm and tmux are known to work.
 Some terminal emulators implement optimizations, that cause every one of their
 windows to have the same child process. This obscures the path that lastcwd
 needs to traverse - from the focused window id, through that window's process
-id down to the foreground child running in that window.
+id down to the foreground descendant running in that window.
 
 Some of those terminal emulators, however, implement a way to reconstruct that
 connection, in the form of the WINDOWID environment variable, but some don't.
