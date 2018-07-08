@@ -30,10 +30,10 @@ With terminal multiplexers, we need to use an api specific to the given
 multiplexer, to figure out the active window/pane and search for their
 foreground descendant. Tmux does provide a way to do it, while screen does not.
 
-## Terminals executing non-shells
-When launching a terminal with a non-shell executable, that eventually spawns a
-shell, or a terminal multiplexer, that last call should be `exec`ed. Otherwise
-the shell is needlessly left in the process tree and produces a false positive.
+## Terminals executing non-shells spawning tmux
+When launching a terminal with a custom executable/script, that eventually
+spawns tmux, that last call to tmux should be `exec`ed.  Otherwise the shell is
+needlessly left in the process tree and produces a false positive.
 
 This could be fixed in lastcwd, but the effort/added complexity don't seem to
 be worth it.
