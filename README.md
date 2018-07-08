@@ -13,6 +13,7 @@ bash, coreutils, grep, procps-ng, xorg-xprop.
 
 # Limitations
 
+## WINDOWID
 tl;dr - gnome-terminal, lxterminal, terminator and screen will not work as a
 source of information about the last working directory for lastcwd.
 Aterm, konsole, sakura, urxvt, xfce4-terminal, xterm and tmux are known to work.
@@ -28,6 +29,14 @@ connection, in the form of the WINDOWID environment variable, but some don't.
 With terminal multiplexers, we need to use an api specific to the given
 multiplexer, to figure out the active window/pane and search for their
 foreground descendant. Tmux does provide a way to do it, while screen does not.
+
+## Terminals executing non-shells
+When launching a terminal with a non-shell executable, that eventually spawns a
+shell, or a terminal multiplexer, that last call should be `exec`ed. Otherwise
+the shell is needlessly left in the process tree and produces a false positive.
+
+This could be fixed in lastcwd, but the effort/added complexity don't seem to
+be worth it.
 
 # How do I use it ?
 
