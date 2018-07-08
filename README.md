@@ -1,21 +1,39 @@
 # What is lastcwd ?
 
 Lastcwd is a shell script that prints the working directory of the foreground
-process running in the currently focused X window.
-
-It works correctly with tmux, but not screen.
+process running in the currently focused X window (including support for tmux).
 
 The main purpose of this tool is to allow the user to open a new terminal with
 the working directory set to the one they were already working in, using a key
 binding, but it could also be used with file managers, media players, etc.
 
-# Dependencies ?
+# Dependencies
 
 bash, coreutils, grep, procps-ng, xorg-xprop.
 
+# Limitations
+
+tl;dr - gnome-terminal, lxterminal, terminator and screen will not work as a
+source of information about the last working directory for lastcwd.
+Aterm, konsole, sakura, urxvt, xfce4-terminal, xterm and tmux are known to work.
+
+Some terminal emulators implement optimizations, that cause every one of their
+windows to have the same child process. This obscures the path that lastcwd
+needs to traverse - from the focused window id, through that window's process
+id down to the foreground child running in that window.
+
+Some of those terminal emulators, however, implement a way to reconstruct that
+connection, in the form of the WINDOWID environment variable, but some don't.
+
+With terminal multiplexers, we need to use an api specific to the given
+multiplexer, to figure out the active window/pane and search for their
+foreground descendant. Tmux does provide a way to do it, while screen does not.
+
 # How do I use it ?
 
-E.g.:
+Save lastcwd somewhere in your $PATH and make it executable.
+
+Example usage:
 ```
 tmux new -c "$(lastcwd)"
 ```
@@ -26,13 +44,10 @@ xterm -e 'cd "$(lastcwd)" && $(getent passwd "$(id -u)"|cut -d: -f7)'
 urxvt -cd "$(lastcwd)"
 ```
 ```
-gnome-terminal --working-directory "$(lastcwd)"
+konsole --workdir "$(lastcwd)"
 ```
 ```
 xfce4-terminal --working-directory "$(lastcwd)"
-```
-```
-lxterminal --working-directory="$(lastcwd)"
 ```
 also
 ```

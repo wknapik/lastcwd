@@ -15,7 +15,7 @@ foreground_pid() {
         for pid in "${pids[@]}"; do
             if ps -o stat:1= "$pid"|grep -qFm1 +; then
                 wid="$(ps e -o args= "$pid"|grep -o "WINDOWID=[0-9][0-9]*"|cut -d= -f2 || true)"
-                if [[ -n "$wid" && "$wid" == "$((window_id))" || -z "$wid" ]]; then
+                if [[ -n "$wid" && "$wid" == "$((window_id))" ]]; then
                     echo "$pid"
                     return
                 fi
