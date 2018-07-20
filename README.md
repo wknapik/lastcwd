@@ -47,7 +47,7 @@ Example usage:
 tmux new -c "$(lastcwd)"
 ```
 ```
-xterm -e 'cd "$(lastcwd)" && $(getent passwd "$(id -u)"|cut -d: -f7)'
+xterm -e 'cd "$(lastcwd)" && "$(getent passwd "$(id -u)"|cut -d: -f7)"'
 ```
 ```
 urxvt -cd "$(lastcwd)"
