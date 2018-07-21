@@ -62,6 +62,9 @@ also
 ```
 thunar "$(lastcwd)"
 ```
+```
+pcmanfm "$(lastcwd)"
+```
 etc.
 
 This i3 keybinding opens a new xfce4-terminal with a new tmux session:
