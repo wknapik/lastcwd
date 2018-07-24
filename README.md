@@ -16,7 +16,8 @@ bash, coreutils, grep, procps-ng, xorg-xprop.
 ## WINDOWID
 tl;dr - gnome-terminal, lxterminal, terminator and screen will not work as a
 source of information about the last working directory for lastcwd.
-Aterm, konsole, sakura, urxvt, xfce4-terminal, xterm and tmux are known to work.
+Aterm, konsole, mate-terminal, sakura, urxvt, xfce4-terminal, xterm and tmux
+are known to work.
 
 Some terminal emulators implement optimizations, that cause every one of their
 windows to have the same child process. This obscures the path that lastcwd
@@ -54,6 +55,9 @@ urxvt -cd "$(lastcwd)"
 ```
 ```
 konsole --workdir "$(lastcwd)"
+```
+```
+mate-terminal --working-directory "$(lastcwd)"
 ```
 ```
 xfce4-terminal --working-directory "$(lastcwd)"
