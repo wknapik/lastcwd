@@ -76,11 +76,16 @@ This i3 keybinding opens a new xfce4-terminal with a new tmux session:
 bindsym $mod+Return exec xfce4-terminal -x tmux new -c "$(lastcwd)"
 ```
 
-# Misc
+# Similar functionality configurable in specific tools
 
-A bonus hint for tmux users - opening/splitting windows with the current path:
+Tmux - opening/splitting windows with the current directory as cwd:
 ```
 bind '"' split-window -c "#{pane_current_path}"
 bind % split-window -h -c "#{pane_current_path}"
 bind c new-window -c "#{pane_current_path}"
+```
+
+Gtk file chooser - start in the current directory:
+```
+gsettings set org.gtk.Settings.FileChooser startup-mode cwd
 ```
