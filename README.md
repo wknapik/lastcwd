@@ -85,7 +85,7 @@ bind % split-window -h -c "#{pane_current_path}"
 bind c new-window -c "#{pane_current_path}"
 ```
 
-Gtk+ 2/Gtk+ 3 file chooser - start in the current directory:
+Gtk+ 3/Gtk+ 2 file chooser - start in the current directory:
 ```
 gsettings set org.gtk.Settings.FileChooser startup-mode cwd
 ```
